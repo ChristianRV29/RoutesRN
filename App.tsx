@@ -1,26 +1,15 @@
+import 'react-native-gesture-handler';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
-import Icon from 'react-native-vector-icons/Ionicons';
+import { StackNavigator } from '~src/navigation/StackNavigator';
 
-export const App = () => {
+const App = () => {
   return (
-    <View style={styles.mainWrapper}>
-      <Text style={styles.text}>Welcome to Routes app</Text>
-      <Icon name="home-outline" size={30} color={'black'} />
-    </View>
+    <NavigationContainer>
+      <StackNavigator />
+    </NavigationContainer>
   );
 };
 
-const styles = StyleSheet.create({
-  mainWrapper: {
-    alignItems: 'center',
-    backgroundColor: '#FFF',
-    flex: 1,
-    justifyContent: 'center',
-  },
-  text: {
-    color: '#000000',
-    marginBottom: 20,
-  },
-});
+export default App;
