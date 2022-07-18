@@ -7,7 +7,13 @@ const { Navigator, Screen } = createStackNavigator();
 
 export const StackNavigator = () => {
   return (
-    <Navigator screenOptions={{ headerShown: false }}>
+    <Navigator
+      screenOptions={{
+        headerShown: false,
+        cardStyle: {
+          backgroundColor: 'white',
+        },
+      }}>
       <Screen name="HomeScreen" component={HomeScreen} />
     </Navigator>
   );
