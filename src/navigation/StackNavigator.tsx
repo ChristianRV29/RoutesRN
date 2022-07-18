@@ -1,9 +1,15 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { HomeScreen } from '~src/screens/HomeScreen';
+import { MapScreen } from '~src/screens/MapScreen';
+import { PermissionScreen } from '~src/screens/PermissionScreen';
 
-const { Navigator, Screen } = createStackNavigator();
+export type RootStackParamList = {
+  MapScreen: undefined;
+  PermissionScreen: undefined;
+};
+
+const { Navigator, Screen } = createStackNavigator<RootStackParamList>();
 
 export const StackNavigator = () => {
   return (
@@ -14,7 +20,8 @@ export const StackNavigator = () => {
           backgroundColor: 'white',
         },
       }}>
-      <Screen name="HomeScreen" component={HomeScreen} />
+      <Screen name="MapScreen" component={MapScreen} />
+      <Screen name="PermissionScreen" component={PermissionScreen} />
     </Navigator>
   );
 };
