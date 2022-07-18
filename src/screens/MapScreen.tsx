@@ -8,7 +8,7 @@ import { RootStackParamList } from '~src/navigation/StackNavigator';
 
 export const MapScreen = () => {
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    useNavigation<NativeStackNavigationProp<RootStackParamList, 'MapScreen'>>();
 
   return (
     <View style={styles.mainWrapper}>

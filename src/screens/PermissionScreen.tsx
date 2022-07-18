@@ -8,7 +8,9 @@ import { RootStackParamList } from '~src/navigation/StackNavigator';
 
 export const PermissionScreen = () => {
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    useNavigation<
+      NativeStackNavigationProp<RootStackParamList, 'PermissionScreen'>
+    >();
 
   return (
     <View style={styles.mainWrapper}>
