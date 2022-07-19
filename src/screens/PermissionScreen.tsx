@@ -1,42 +1,12 @@
-import React from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import {
-  PERMISSIONS,
-  PermissionStatus,
-  request,
-} from 'react-native-permissions';
+import React, { useContext } from 'react';
+
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { RootStackParamList } from '~src/navigation/StackNavigator';
+import { PermissionsContext } from '~src/context/PermissionsContext';
 
 export const PermissionScreen = () => {
-  const { navigate } =
-    useNavigation<
-      NativeStackNavigationProp<RootStackParamList, 'PermissionScreen'>
-    >();
-  const checkLocationPermission = async () => {
-    let permissionStatus: PermissionStatus;
-    if (Platform.OS === 'ios') {
-      permissionStatus = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
-    } else {
-      permissionStatus = await request(
-        PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
-      );
-    }
-    if (permissionStatus === 'granted') {
-      navigate('MapScreen');
-    } else {
-      console.log('🗺 ~ Permissions denied');
-    }
-  };
+  const { permissions, askLocationPermission } = useContext(PermissionsContext);
 
   return (
     <View style={styles.mainWrapper}>
@@ -44,11 +14,12 @@ export const PermissionScreen = () => {
         <Text style={styles.text}>Permissions screen</Text>
       </View>
       <TouchableOpacity
-        onPress={() => checkLocationPermission()}
+        onPress={() => askLocationPermission()}
         style={styles.button}>
         <Text style={styles.textButton}>Check permissions</Text>
         <Icon name="lock-closed-outline" size={20} color={'white'} />
       </TouchableOpacity>
+      <Text style={styles.permissionsText}>{JSON.stringify(permissions)}</Text>
     </View>
   );
 };
@@ -68,6 +39,7 @@ const styles = StyleSheet.create({
   text: {
     color: '#000000',
     fontSize: 20,
+    fontWeight: 'bold',
   },
   button: {
     alignItems: 'center',
@@ -82,5 +54,9 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 15,
     marginRight: 10,
+  },
+  permissionsText: {
+    fontSize: 15,
+    marginTop: 10,
   },
 });
