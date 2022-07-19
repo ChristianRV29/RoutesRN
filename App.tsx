@@ -3,11 +3,18 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { StackNavigator } from '~src/navigation/StackNavigator';
+import { PermissionsProvider } from '~src/context/PermissionsContext';
+
+const AppState = ({ children }: any): JSX.Element => {
+  return <PermissionsProvider>{children}</PermissionsProvider>;
+};
 
 const App = () => {
   return (
     <NavigationContainer>
-      <StackNavigator />
+      <AppState>
+        <StackNavigator />
+      </AppState>
     </NavigationContainer>
   );
 };

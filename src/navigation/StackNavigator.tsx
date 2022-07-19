@@ -20,8 +20,8 @@ export const StackNavigator = () => {
           backgroundColor: 'white',
         },
       }}>
-      <Screen name="MapScreen" component={MapScreen} />
       <Screen name="PermissionScreen" component={PermissionScreen} />
+      <Screen name="MapScreen" component={MapScreen} />
     </Navigator>
   );
 };

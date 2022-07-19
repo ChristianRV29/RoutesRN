@@ -1,24 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { RootStackParamList } from '~src/navigation/StackNavigator';
+import { PermissionsContext } from '~src/context/PermissionsContext';
 
 export const PermissionScreen = () => {
-  const navigation =
-    useNavigation<
-      NativeStackNavigationProp<RootStackParamList, 'PermissionScreen'>
-    >();
+  const { permissions, askLocationPermission } = useContext(PermissionsContext);
 
   return (
     <View style={styles.mainWrapper}>
-      <Text style={styles.text}>Permissions screen</Text>
-      <Icon name="key-outline" size={30} color={'black'} />
-      <TouchableOpacity onPress={() => navigation.pop()} style={styles.button}>
-        <Text style={styles.textButton}>Go back</Text>
+      <View style={styles.contentWrapper}>
+        <Text style={styles.text}>Permissions screen</Text>
+      </View>
+      <TouchableOpacity
+        onPress={() => askLocationPermission()}
+        style={styles.button}>
+        <Text style={styles.textButton}>Check permissions</Text>
+        <Icon name="lock-closed-outline" size={20} color={'white'} />
       </TouchableOpacity>
+      <Text style={styles.permissionsText}>{JSON.stringify(permissions)}</Text>
     </View>
   );
 };
@@ -30,21 +31,32 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
+  contentWrapper: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: 50,
+  },
   text: {
     color: '#000000',
-    marginBottom: 20,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   button: {
     alignItems: 'center',
     backgroundColor: '#6dc6da',
-    borderRadius: 20,
-    height: 30,
+    borderRadius: 25,
+    height: 50,
     justifyContent: 'center',
-    marginTop: 10,
+    flexDirection: 'row',
     width: 200,
   },
   textButton: {
     color: 'white',
     fontSize: 15,
+    marginRight: 10,
+  },
+  permissionsText: {
+    fontSize: 15,
+    marginTop: 10,
   },
 });
