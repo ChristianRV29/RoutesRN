@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export const MapScreen = () => {
@@ -7,6 +7,12 @@ export const MapScreen = () => {
     <View style={styles.mainWrapper}>
       <Text style={styles.text}>Welcome to Routes app</Text>
       <Icon name="map-outline" size={30} color={'black'} />
+      <TouchableOpacity
+        onPress={() => console.log('Going back')}
+        style={styles.button}>
+        <Text style={styles.textButton}>Go back</Text>
+        <Icon name="lock-closed-outline" size={20} color={'white'} />
+      </TouchableOpacity>
     </View>
   );
 };
