@@ -1,6 +1,8 @@
-import React, { createContext, useState } from 'react';
-import { Platform } from 'react-native';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { createContext, useEffect, useState } from 'react';
+import { AppState, Platform } from 'react-native';
 import {
+  check,
   PERMISSIONS,
   PermissionStatus,
   request,
@@ -36,7 +38,25 @@ export const PermissionsProvider = ({ children }: any) => {
     }
     setPermissions({ ...permissions, locationStatus: permissionStatus });
   };
-  const checkLocationPermissions = () => {};
+  const checkLocationPermissions = async () => {
+    let permissionStatus: PermissionStatus;
+    if (Platform.OS === 'ios') {
+      permissionStatus = await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+    } else {
+      permissionStatus = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+    }
+    setPermissions({ ...permissions, locationStatus: permissionStatus });
+  };
+
+  useEffect(() => {
+    AppState.addEventListener('change', state => {
+      if (state !== 'active') {
+        return;
+      }
+
+      checkLocationPermissions();
+    });
+  }, []);
 
   return (
     <PermissionsContext.Provider
