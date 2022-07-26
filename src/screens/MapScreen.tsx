@@ -1,40 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { mapScreenStyles } from '~src/styles';
 
 export const MapScreen = () => {
   return (
-    <View style={styles.mainWrapper}>
-      <Text style={styles.text}>Welcome to Routes app</Text>
+    <View style={mapScreenStyles.mainWrapper}>
+      <Text style={mapScreenStyles.text}>Welcome to Routes app</Text>
       <Icon name="map-outline" size={30} color={'black'} />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  mainWrapper: {
-    alignItems: 'center',
-    backgroundColor: '#FFF',
-    flex: 1,
-    justifyContent: 'center',
-  },
-  text: {
-    color: '#000000',
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: '#6dc6da',
-    borderRadius: 20,
-    height: 30,
-    justifyContent: 'center',
-    marginTop: 10,
-    width: 200,
-  },
-  textButton: {
-    color: 'white',
-    fontSize: 15,
-  },
-});
