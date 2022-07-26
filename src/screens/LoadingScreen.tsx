@@ -1,18 +1,12 @@
 import React from 'react';
-import { ActivityIndicator, View, StyleSheet } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
+
+import { loadingScreenStyles } from '~src/styles';
 
 export const LoadingScreen = () => {
   return (
-    <View style={styles.wrapper}>
+    <View style={loadingScreenStyles.wrapper}>
       <ActivityIndicator size={50} color={'black'} />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-  },
-});

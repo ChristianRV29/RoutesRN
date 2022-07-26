@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+
 import { mapScreenStyles } from '~src/styles';
 
 export const MapScreen = () => {
