@@ -12,8 +12,11 @@ export const PermissionScreen = () => {
   return (
     <View style={permissionsScreenStyles.mainWrapper}>
       <View style={permissionsScreenStyles.contentWrapper}>
-        <Text style={permissionsScreenStyles.text}>Permissions screen</Text>
+        <Text style={permissionsScreenStyles.text}>
+          We need to check the app permissions
+        </Text>
       </View>
+
       <TouchableOpacity
         onPress={() => askLocationPermission()}
         style={permissionsScreenStyles.button}>
