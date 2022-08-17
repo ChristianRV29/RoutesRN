@@ -18,8 +18,6 @@ export const MapScreen = () => {
           longitudeDelta: 0.0421,
         }}
       />
-      {/* <Text style={mapScreenStyles.text}>Welcome to Routes app</Text>
-      <Icon name="map-outline" size={30} color={'black'} /> */}
     </View>
   );
 };
