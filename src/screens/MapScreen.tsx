@@ -10,11 +10,11 @@ export const MapScreen = () => {
       <Map
         markers={[
           {
-            title: 'Test',
-            description: 'This is a marker',
+            title: 'Sogamoso',
+            description: 'Sogamoso - Boyaca',
             coordinate: {
-              latitude: 37.78825,
-              longitude: -122.4324,
+              latitude: 5.716118333333333,
+              longitude: -72.93119666666666,
             },
           },
         ]}
