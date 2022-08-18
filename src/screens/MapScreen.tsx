@@ -1,25 +1,24 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-// import Icon from 'react-native-vector-icons/Ionicons';
+import { View } from 'react-native';
 
-import MapView from 'react-native-maps';
-
+import { Map } from '~src/components/Map/Map';
 import { mapScreenStyles } from '~src/styles';
 
 export const MapScreen = () => {
   return (
     <View style={mapScreenStyles.mainWrapper}>
-      <MapView
-        style={{ ...StyleSheet.absoluteFillObject }}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
+      <Map
+        markers={[
+          {
+            title: 'Test',
+            description: 'This is a marker',
+            coordinate: {
+              latitude: 37.78825,
+              longitude: -122.4324,
+            },
+          },
+        ]}
       />
-      {/* <Text style={mapScreenStyles.text}>Welcome to Routes app</Text>
-      <Icon name="map-outline" size={30} color={'black'} /> */}
     </View>
   );
 };
