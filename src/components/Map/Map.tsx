@@ -1,4 +1,5 @@
-import React, { useId } from 'react';
+import Geolocation from '@react-native-community/geolocation';
+import React, { useEffect, useId } from 'react';
 import { StyleSheet } from 'react-native';
 
 import MapView, { MapMarkerProps, Marker } from 'react-native-maps';
@@ -8,6 +9,12 @@ interface Props {
 }
 
 export const Map: React.FC<Props> = ({ markers }) => {
+  useEffect(() => {
+    Geolocation.getCurrentPosition(info =>
+      console.log('📌 Current Location: ', info),
+    );
+  }, []);
+
   const id = useId();
   return (
     <MapView
