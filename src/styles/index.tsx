@@ -72,3 +72,15 @@ export const mapScreenStyles = StyleSheet.create({
     fontSize: 15,
   },
 });
+
+export const fabIconStyles = StyleSheet.create({
+  mainWrapper: {
+    alignItems: 'center',
+    bottom: 0,
+    justifyContent: 'center',
+    marginHorizontal: 8,
+    marginVertical: 20,
+    position: 'absolute',
+    right: 0,
+  },
+});
