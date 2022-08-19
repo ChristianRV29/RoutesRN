@@ -1,11 +1,11 @@
-import React, { useId } from 'react';
-import { StyleSheet } from 'react-native';
+import React, { Fragment, useId } from 'react';
+import { StyleSheet, Platform } from 'react-native';
 import MapView, { MapMarkerProps, Marker } from 'react-native-maps';
 
 import { useLocation } from '~src/hooks/useLocation';
 import { LoadingScreen } from '~src/screens/LoadingScreen';
 import { FabIcon } from '~src/components/FabIcon/FabIcon';
-import { fabIconStyles } from '../../styles/index';
+import { fabIconStyles } from '~src/styles/index';
 
 interface Props {
   markers?: MapMarkerProps[];
@@ -21,7 +21,7 @@ export const Map: React.FC<Props> = ({ markers }) => {
   }
 
   return (
-    <>
+    <Fragment>
       <MapView
         initialRegion={{
           latitude: userLocation.latitude,
@@ -35,12 +35,14 @@ export const Map: React.FC<Props> = ({ markers }) => {
           <Marker key={`${index} - ${id}`} {...markerData} />
         ))}
       </MapView>
-      <FabIcon
-        iconName="compass-outline"
-        iconSize={50}
-        styles={fabIconStyles.mainWrapper}
-        onPress={() => console.log('Centring')}
-      />
-    </>
+      {Platform.OS === 'ios' && (
+        <FabIcon
+          iconName="compass-outline"
+          iconSize={50}
+          styles={fabIconStyles.mainWrapper}
+          onPress={() => console.log('Centring')}
+        />
+      )}
+    </Fragment>
   );
 };
