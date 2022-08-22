@@ -6,25 +6,32 @@ export const useLocation = () => {
   const [hasLocation, setHasLocation] = useState<boolean>(false);
   const [userLocation, setUserLocation] = useState<Location>({} as Location);
 
+  const getCurrentLocation = (): Promise<Location> => {
+    return new Promise((resolve, reject) => {
+      Geolocation.getCurrentPosition(
+        ({ coords }) => {
+          resolve({
+            ...coords,
+          });
+        },
+        err => {
+          reject({ err });
+        },
+        { enableHighAccuracy: true },
+      );
+    });
+  };
+
   useEffect(() => {
-    Geolocation.getCurrentPosition(
-      ({ coords }) => {
-        setUserLocation({ ...coords });
-        setHasLocation(true);
-      },
-      error => {
-        console.log('🐞 Error: ', error);
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 20000,
-        maximumAge: 1000,
-      },
-    );
+    getCurrentLocation().then(location => {
+      setUserLocation({ ...location });
+      setHasLocation(true);
+    });
   }, []);
 
   return {
     hasLocation,
     userLocation,
+    getCurrentLocation,
   };
 };
