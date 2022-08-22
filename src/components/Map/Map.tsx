@@ -20,7 +20,12 @@ export const Map: React.FC<Props> = ({ markers }) => {
   const centerPosition = async () => {
     const location = await getCurrentLocation();
 
-    mapViewRef.current?.animateCamera({});
+    mapViewRef.current?.animateCamera({
+      center: {
+        longitude: location.longitude,
+        latitude: location.latitude,
+      },
+    });
   };
 
   if (!hasLocation) {
@@ -48,7 +53,7 @@ export const Map: React.FC<Props> = ({ markers }) => {
           iconName="compass-outline"
           iconSize={50}
           styles={fabIconStyles.mainWrapper}
-          onPress={() => console.log('Centring')}
+          onPress={() => centerPosition()}
         />
       )}
     </Fragment>
