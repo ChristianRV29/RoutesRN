@@ -1,4 +1,4 @@
-import React, { Fragment, useId, useRef } from 'react';
+import React, { Fragment, useEffect, useId, useRef } from 'react';
 import { StyleSheet, Platform } from 'react-native';
 import MapView, { MapMarkerProps, Marker } from 'react-native-maps';
 
@@ -14,8 +14,29 @@ interface Props {
 export const Map: React.FC<Props> = ({ markers }) => {
   const id = useId();
 
-  const { userLocation, hasLocation, getCurrentLocation } = useLocation();
+  const { userLocation, hasLocation, getCurrentLocation, followUserLocation } =
+    useLocation();
   const mapViewRef = useRef<MapView>();
+
+  useEffect(() => {
+    followUserLocation();
+
+    return () => {
+      // TODO - Clean watch
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const { latitude, longitude } = userLocation;
+
+    mapViewRef.current?.animateCamera({
+      center: {
+        longitude,
+        latitude,
+      },
+    });
+  }, [userLocation]);
 
   const centerPosition = async () => {
     const location = await getCurrentLocation();
