@@ -14,21 +14,32 @@ interface Props {
 export const Map: React.FC<Props> = ({ markers }) => {
   const id = useId();
 
-  const { userLocation, hasLocation, getCurrentLocation, followUserLocation } =
-    useLocation();
+  const {
+    followUserLocation,
+    getCurrentLocation,
+    hasLocation,
+    stopFollowUserLocation,
+    userLocation,
+  } = useLocation();
+
   const mapViewRef = useRef<MapView>();
+  const isFollowingRef = useRef<boolean>(true);
 
   useEffect(() => {
     followUserLocation();
 
     return () => {
-      // TODO - Clean watch
+      stopFollowUserLocation();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     const { latitude, longitude } = userLocation;
+
+    if (!isFollowingRef.current) {
+      return;
+    }
 
     mapViewRef.current?.animateCamera({
       center: {
@@ -40,6 +51,8 @@ export const Map: React.FC<Props> = ({ markers }) => {
 
   const centerPosition = async () => {
     const location = await getCurrentLocation();
+
+    isFollowingRef.current = true;
 
     mapViewRef.current?.animateCamera({
       center: {
@@ -56,6 +69,7 @@ export const Map: React.FC<Props> = ({ markers }) => {
   return (
     <Fragment>
       <MapView
+        onTouchStart={() => (isFollowingRef.current = false)}
         ref={el => (mapViewRef.current = el!)}
         initialRegion={{
           latitude: userLocation.latitude,
@@ -69,14 +83,12 @@ export const Map: React.FC<Props> = ({ markers }) => {
           <Marker key={`${index} - ${id}`} {...markerData} />
         ))}
       </MapView>
-      {Platform.OS === 'ios' && (
-        <FabIcon
-          iconName="compass-outline"
-          iconSize={50}
-          styles={fabIconStyles.mainWrapper}
-          onPress={() => centerPosition()}
-        />
-      )}
+      <FabIcon
+        iconName="compass-outline"
+        iconSize={50}
+        styles={fabIconStyles.mainWrapper}
+        onPress={() => centerPosition()}
+      />
     </Fragment>
   );
 };
