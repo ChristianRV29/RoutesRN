@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useId, useRef } from 'react';
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 import MapView, { MapMarkerProps, Marker } from 'react-native-maps';
 
 import { useLocation } from '~src/hooks/useLocation';
@@ -14,20 +14,30 @@ interface Props {
 export const Map: React.FC<Props> = ({ markers }) => {
   const id = useId();
 
-  const { userLocation, hasLocation, getCurrentLocation, followUserLocation } =
-    useLocation();
+  const isFollowingRef = useRef<boolean>(true);
+
+  const {
+    followUserLocation,
+    getCurrentLocation,
+    hasLocation,
+    stopFollowUser,
+    userLocation,
+  } = useLocation();
   const mapViewRef = useRef<MapView>();
 
   useEffect(() => {
     followUserLocation();
 
     return () => {
-      // TODO - Clean watch
+      stopFollowUser();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
+    if (!isFollowingRef.current) {
+      return;
+    }
     const { latitude, longitude } = userLocation;
 
     mapViewRef.current?.animateCamera({
@@ -39,6 +49,8 @@ export const Map: React.FC<Props> = ({ markers }) => {
   }, [userLocation]);
 
   const centerPosition = async () => {
+    isFollowingRef.current = true;
+
     const location = await getCurrentLocation();
 
     mapViewRef.current?.animateCamera({
@@ -56,6 +68,7 @@ export const Map: React.FC<Props> = ({ markers }) => {
   return (
     <Fragment>
       <MapView
+        onTouchStart={() => (isFollowingRef.current = false)}
         ref={el => (mapViewRef.current = el!)}
         initialRegion={{
           latitude: userLocation.latitude,
@@ -69,14 +82,12 @@ export const Map: React.FC<Props> = ({ markers }) => {
           <Marker key={`${index} - ${id}`} {...markerData} />
         ))}
       </MapView>
-      {Platform.OS === 'ios' && (
-        <FabIcon
-          iconName="compass-outline"
-          iconSize={50}
-          styles={fabIconStyles.mainWrapper}
-          onPress={() => centerPosition()}
-        />
-      )}
+      <FabIcon
+        iconName="compass-outline"
+        iconSize={50}
+        styles={fabIconStyles.mainWrapper}
+        onPress={() => centerPosition()}
+      />
     </Fragment>
   );
 };
