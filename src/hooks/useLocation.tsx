@@ -6,6 +6,19 @@ export const useLocation = () => {
   const [hasLocation, setHasLocation] = useState<boolean>(false);
   const [userLocation, setUserLocation] = useState<Location>({} as Location);
 
+  const followUserLocation = () => {
+    Geolocation.watchPosition(
+      ({ coords }) => {
+        setUserLocation({ ...coords });
+      },
+      err => console.log('🐞 FollowUserLocation error: ', err),
+      {
+        enableHighAccuracy: true,
+        distanceFilter: 10,
+      },
+    );
+  };
+
   const getCurrentLocation = (): Promise<Location> => {
     return new Promise((resolve, reject) => {
       Geolocation.getCurrentPosition(
@@ -30,8 +43,9 @@ export const useLocation = () => {
   }, []);
 
   return {
+    followUserLocation,
+    getCurrentLocation,
     hasLocation,
     userLocation,
-    getCurrentLocation,
   };
 };
