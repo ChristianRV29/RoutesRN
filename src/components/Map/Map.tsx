@@ -5,7 +5,6 @@ import MapView, { MapMarkerProps, Marker } from 'react-native-maps';
 import { useLocation } from '~src/hooks/useLocation';
 import { LoadingScreen } from '~src/screens/LoadingScreen';
 import { FabIcon } from '~src/components/FabIcon/FabIcon';
-import { fabIconStyles } from '~src/styles/index';
 
 interface Props {
   markers?: MapMarkerProps[];
@@ -84,8 +83,8 @@ export const Map: React.FC<Props> = ({ markers }) => {
       </MapView>
       <FabIcon
         iconName="compass-outline"
-        iconSize={50}
-        styles={fabIconStyles.mainWrapper}
+        iconSize={45}
+        iconColor="gray"
         onPress={() => centerPosition()}
       />
     </Fragment>

@@ -76,11 +76,23 @@ export const mapScreenStyles = StyleSheet.create({
 export const fabIconStyles = StyleSheet.create({
   mainWrapper: {
     alignItems: 'center',
+    backgroundColor: '#ffffff39',
     bottom: 0,
+    elevation: 15,
+    height: 50,
     justifyContent: 'center',
     marginHorizontal: 8,
     marginVertical: 20,
+    paddingHorizontal: 3.8,
     position: 'absolute',
     right: 0,
+    shadowColor: '#000',
+    shadowOpacity: 0.43,
+    shadowRadius: 9.51,
+    width: 50,
+    shadowOffset: {
+      width: 0,
+      height: 7,
+    },
   },
 });
