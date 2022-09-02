@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useId, useRef } from 'react';
+import React, { Fragment, useEffect, useId, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { MapMarkerProps, Marker, Polyline } from 'react-native-maps';
 
@@ -15,6 +15,7 @@ export const Map: React.FC<Props> = ({ markers }) => {
   const id = useId();
 
   const isFollowingRef = useRef<boolean>(true);
+  const [showingPolyline, setShowingPolyline] = useState<boolean>(false);
 
   const {
     followUserLocation,
@@ -82,7 +83,13 @@ export const Map: React.FC<Props> = ({ markers }) => {
         {markers?.map((markerData, index) => (
           <Marker key={`${index} - ${id}`} {...markerData} />
         ))}
-        <Polyline coordinates={routeLines} strokeColor="blue" strokeWidth={3} />
+        {showingPolyline && (
+          <Polyline
+            coordinates={routeLines}
+            strokeColor="blue"
+            strokeWidth={3}
+          />
+        )}
       </MapView>
       <View style={iconsStyles.container}>
         <FabIcon
@@ -92,10 +99,10 @@ export const Map: React.FC<Props> = ({ markers }) => {
           onPress={() => centerPosition()}
         />
         <FabIcon
-          iconName="analytics-outline"
+          iconName="brush-outline"
           iconSize={45}
           iconColor="white"
-          onPress={() => {}}
+          onPress={() => setShowingPolyline(!showingPolyline)}
         />
       </View>
     </Fragment>
