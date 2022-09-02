@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useId, useRef } from 'react';
 import { StyleSheet } from 'react-native';
-import MapView, { MapMarkerProps, Marker } from 'react-native-maps';
+import MapView, { MapMarkerProps, Marker, Polyline } from 'react-native-maps';
 
 import { useLocation } from '~src/hooks/useLocation';
 import { LoadingScreen } from '~src/screens/LoadingScreen';
@@ -21,6 +21,7 @@ export const Map: React.FC<Props> = ({ markers }) => {
     hasLocation,
     stopFollowUser,
     userLocation,
+    routeLines,
   } = useLocation();
   const mapViewRef = useRef<MapView>();
 
@@ -80,6 +81,7 @@ export const Map: React.FC<Props> = ({ markers }) => {
         {markers?.map((markerData, index) => (
           <Marker key={`${index} - ${id}`} {...markerData} />
         ))}
+        <Polyline coordinates={routeLines} strokeColor="blue" strokeWidth={3} />
       </MapView>
       <FabIcon
         iconName="compass-outline"
