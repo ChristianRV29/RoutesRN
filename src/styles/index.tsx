@@ -73,26 +73,27 @@ export const mapScreenStyles = StyleSheet.create({
   },
 });
 
-export const fabIconStyles = StyleSheet.create({
-  mainWrapper: {
+export const iconsStyles = StyleSheet.create({
+  container: {
     alignItems: 'center',
-    backgroundColor: '#ffffff39',
     bottom: 0,
-    elevation: 15,
-    height: 50,
-    justifyContent: 'center',
-    marginHorizontal: 8,
-    marginVertical: 20,
-    paddingHorizontal: 3.8,
+    flexDirection: 'column',
+    height: 100,
+    justifyContent: 'space-between',
+    marginVertical: 30,
     position: 'absolute',
     right: 0,
-    shadowColor: '#000',
-    shadowOpacity: 0.43,
-    shadowRadius: 9.51,
-    width: 50,
-    shadowOffset: {
-      width: 0,
-      height: 7,
-    },
+    width: 60,
+  },
+  iconWrapper: {
+    backgroundColor: 'rgba(109, 103, 103, 0.5)',
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderRadius: 5,
+    borderWidth: 2,
+    justifyContent: 'center',
+    marginVertical: 5,
+    paddingLeft: 2,
   },
 });
+
+export const fabIconStyles = StyleSheet.create({});

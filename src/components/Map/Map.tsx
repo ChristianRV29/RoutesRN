@@ -1,10 +1,11 @@
 import React, { Fragment, useEffect, useId, useRef } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import MapView, { MapMarkerProps, Marker, Polyline } from 'react-native-maps';
 
 import { useLocation } from '~src/hooks/useLocation';
 import { LoadingScreen } from '~src/screens/LoadingScreen';
 import { FabIcon } from '~src/components/FabIcon/FabIcon';
+import { iconsStyles } from '~src/styles';
 
 interface Props {
   markers?: MapMarkerProps[];
@@ -83,12 +84,20 @@ export const Map: React.FC<Props> = ({ markers }) => {
         ))}
         <Polyline coordinates={routeLines} strokeColor="blue" strokeWidth={3} />
       </MapView>
-      <FabIcon
-        iconName="compass-outline"
-        iconSize={45}
-        iconColor="gray"
-        onPress={() => centerPosition()}
-      />
+      <View style={iconsStyles.container}>
+        <FabIcon
+          iconName="compass-outline"
+          iconSize={45}
+          iconColor="white"
+          onPress={() => centerPosition()}
+        />
+        <FabIcon
+          iconName="analytics-outline"
+          iconSize={45}
+          iconColor="white"
+          onPress={() => {}}
+        />
+      </View>
     </Fragment>
   );
 };
