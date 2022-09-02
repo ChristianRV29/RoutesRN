@@ -1,3 +1,4 @@
+/* eslint-disable curly */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from 'react';
 import Geolocation from '@react-native-community/geolocation';
@@ -9,9 +10,18 @@ export const useLocation = () => {
   const [routeLines, setRouteLines] = useState<Location[]>([]);
 
   const watchIdRef = useRef<number>();
+  const isMountedRef = useRef<boolean>(true);
+
+  useEffect(() => {
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     getCurrentLocation().then(location => {
+      if (!isMountedRef) return;
+
       setUserLocation({ ...location });
       setRouteLines(lines => [...lines, location]);
       setHasLocation(true);
@@ -21,6 +31,8 @@ export const useLocation = () => {
   const followUserLocation = () => {
     watchIdRef.current = Geolocation.watchPosition(
       ({ coords }) => {
+        if (!isMountedRef) return;
+
         setUserLocation({ ...coords });
         setRouteLines(lines => [...lines, coords]);
       },

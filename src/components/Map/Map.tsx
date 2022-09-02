@@ -1,10 +1,11 @@
-import React, { Fragment, useEffect, useId, useRef } from 'react';
-import { StyleSheet } from 'react-native';
+import React, { Fragment, useEffect, useId, useRef, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import MapView, { MapMarkerProps, Marker, Polyline } from 'react-native-maps';
 
 import { useLocation } from '~src/hooks/useLocation';
 import { LoadingScreen } from '~src/screens/LoadingScreen';
 import { FabIcon } from '~src/components/FabIcon/FabIcon';
+import { iconsStyles } from '~src/styles';
 
 interface Props {
   markers?: MapMarkerProps[];
@@ -14,6 +15,7 @@ export const Map: React.FC<Props> = ({ markers }) => {
   const id = useId();
 
   const isFollowingRef = useRef<boolean>(true);
+  const [showingPolyline, setShowingPolyline] = useState<boolean>(false);
 
   const {
     followUserLocation,
@@ -81,14 +83,28 @@ export const Map: React.FC<Props> = ({ markers }) => {
         {markers?.map((markerData, index) => (
           <Marker key={`${index} - ${id}`} {...markerData} />
         ))}
-        <Polyline coordinates={routeLines} strokeColor="blue" strokeWidth={3} />
+        {showingPolyline && (
+          <Polyline
+            coordinates={routeLines}
+            strokeColor="blue"
+            strokeWidth={3}
+          />
+        )}
       </MapView>
-      <FabIcon
-        iconName="compass-outline"
-        iconSize={45}
-        iconColor="gray"
-        onPress={() => centerPosition()}
-      />
+      <View style={iconsStyles.container}>
+        <FabIcon
+          iconName="compass-outline"
+          iconSize={45}
+          iconColor="white"
+          onPress={() => centerPosition()}
+        />
+        <FabIcon
+          iconName="brush-outline"
+          iconSize={45}
+          iconColor="white"
+          onPress={() => setShowingPolyline(!showingPolyline)}
+        />
+      </View>
     </Fragment>
   );
 };
